@@ -720,6 +720,28 @@
   addEventListener('keydown', (e) => { if (e.key === 'Escape') setNav(false); });
   matchMedia('(min-width: 821px)').addEventListener('change', (e) => { if (e.matches) setNav(false); });
 
+  /* ───────────────────── ПРИЛОЖЕНИЕ НА НАЧАЛНИЯ ЕКРАН ───────────────────── */
+
+  if ('serviceWorker' in navigator) {
+    addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+  // Android/Chrome: показваме бутон за инсталиране в мобилното меню, когато браузърът го позволи
+  const installBtn = $('#installBtn');
+  let installEvt = null;
+  addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    installEvt = e;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener('click', async () => {
+    if (!installEvt) return;
+    installEvt.prompt();
+    await installEvt.userChoice;
+    installEvt = null;
+    installBtn.hidden = true;
+  });
+  addEventListener('appinstalled', () => { installBtn.hidden = true; });
+
   /* ───────────────────── СТРЕЛКИ И СУАЙП ПО БУРГЕРА ───────────────────── */
 
   const stepBurger = (dir) => {
