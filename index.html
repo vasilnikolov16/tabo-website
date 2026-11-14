@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TÁBO — American Street Food · Дупница</title>
+  <meta name="description" content="TÁBO American Street Food — смаш бургери, подправени картофки и ледена наливна бира в Дупница. Голям вкус. Без излишни приказки.">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ffc20e'/%3E%3Cpath d='M14 28c0-10 8-16 18-16s18 6 18 16z' fill='%230b0b0b'/%3E%3Crect x='12' y='31' width='40' height='7' rx='3.5' fill='%230b0b0b'/%3E%3Cpath d='M14 41h36v3c0 5-4 8-9 8H23c-5 0-9-3-9-8z' fill='%230b0b0b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dela+Gothic+One&family=Golos+Text:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Филтри: напръскана боя + зърно -->
+<svg class="defs" aria-hidden="true" width="0" height="0">
+  <filter id="spray" x="-5%" y="-10%" width="110%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035 0.06" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="g"/>
+    <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -4.2 3.15" result="holes"/>
+    <feComposite in="d" in2="holes" operator="in"/>
+  </filter>
+  <filter id="rough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="11" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+  </filter>
+  <symbol id="burger-o" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="9"/>
+    <path d="M25 44c0-13 11-20 25-20s25 7 25 20z" fill="currentColor"/>
+    <rect x="22" y="48" width="56" height="8" rx="4" fill="currentColor"/>
+    <path d="M25 60h50v3c0 7-6 11-13 11H38c-7 0-13-4-13-11z" fill="currentColor"/>
+  </symbol>
+  <symbol id="barrel" viewBox="0 0 120 150">
+    <rect x="8" y="8" width="104" height="136" rx="10" fill="var(--b, #ffc20e)" stroke="#070707" stroke-width="5"/>
+    <rect x="4" y="4" width="112" height="14" rx="7" fill="var(--b, #ffc20e)" stroke="#070707" stroke-width="5"/>
+    <path d="M8 52h104M8 100h104" stroke="#070707" stroke-width="5" opacity=".55"/>
+    <path d="M20 22v118" stroke="#fff" stroke-width="6" opacity=".18" stroke-linecap="round"/>
+    <text x="60" y="84" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="24" fill="var(--t, #070707)" letter-spacing="1">TÁBO</text>
+  </symbol>
+</svg>
+<div class="grain" aria-hidden="true"></div>
+<div class="intro" id="intro" aria-hidden="true"><i></i></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Меню"><i></i><i></i><i></i></button>
+  <a class="logo" href="#top" aria-label="TÁBO — начало">
+    <span>TÁB</span><svg class="logo-o"><use href="#burger-o"/></svg>
+  </a>
+  <nav class="nav-links" aria-label="Основна навигация">
+    <a href="#menu">Меню</a>
+    <a href="#fries">Dirty Fries</a>
+    <a href="#shots">На живо</a>
+    <a href="#place">Мястото</a>
+    <a href="#hours">Работно време</a>
+  </nav>
+  <div class="nav-right">
+    <span class="status" data-status><i></i><b>…</b></span>
+    <a class="btn btn-sm" href="tel:+359883309390">0883 309 390</a>
+  </div>
+</header>
+
+<div class="mnav wall" id="mnav" aria-hidden="true">
+  <nav aria-label="Мобилна навигация">
+    <a href="#menu"><span>01</span>Меню</a>
+    <a href="#fries"><span>02</span>Dirty Fries</a>
+    <a href="#shots"><span>03</span>На живо</a>
+    <a href="#place"><span>04</span>Мястото</a>
+    <a href="#hours"><span>05</span>Работно време</a>
+  </nav>
+  <div class="mnav-foot">
+    <span class="status" data-status><i></i><b>…</b></span>
+    <a class="btn" href="tel:+359883309390">Обади се · 0883 309 390</a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- ═════════ HERO ═════════ -->
+  <section class="hero wall" id="hero">
+    <canvas class="spray-canvas" id="sprayCanvas" aria-hidden="true"></canvas>
+    <div class="hero-light" aria-hidden="true"></div>
+    <div class="spray-ui" id="sprayUi">
+      <span class="scribble spray-hint" id="sprayHint">задръж и пръскай по стената →</span>
+      <button type="button" class="chip-btn spray-toggle" id="sprayToggle" aria-pressed="false" hidden>Включи спрея</button>
+      <div class="spray-colors" role="group" aria-label="Цвят на спрея">
+        <button type="button" data-c="#ffc20e" style="--c:#ffc20e" aria-label="Жълто" aria-pressed="true"></button>
+        <button type="button" data-c="#f4ebd9" style="--c:#f4ebd9" aria-label="Бяло" aria-pressed="false"></button>
+        <button type="button" data-c="#e3372b" style="--c:#e3372b" aria-label="Червено" aria-pressed="false"></button>
+      </div>
+      <button type="button" class="spray-clear" id="sprayClear" hidden>Измий стената</button>
+    </div>
+    <div class="hero-copy">
+      <p class="eyebrow"><span>★</span> American Street Food <span>★</span> Est. 2026 <span>★</span> Дупница</p>
+      <h1 class="wordmark" aria-label="TÁBO">
+        <span class="wm-text">TÁB</span><svg class="wm-o" aria-hidden="true"><use href="#burger-o"/></svg>
+      </h1>
+      <p class="tagline">
+        <span class="tag-a">Голям вкус.</span>
+        <span class="tag-b">Без излишни приказки.</span>
+      </p>
+      <div class="hero-cta">
+        <a class="btn" href="#menu">Виж менюто</a>
+        <a class="btn btn-ghost" href="#hours">Къде сме</a>
+      </div>
+    </div>
+    <div class="hero-burger" aria-hidden="true">
+      <p class="scribble scribble-hero">Big Taste.<br>No Nonsense!</p>
+      <div class="hero-burger-inner" id="heroBurger"></div>
+      <div class="hero-shadow"></div>
+      <span class="sticker sticker-price">OG TÁBO<b>€ 8.99</b></span>
+    </div>
+    <a class="scroll-hint" href="#menu" aria-label="Надолу към менюто"><span></span></a>
+  </section>
+
+  <!-- ═════════ ЛЕНТА ═════════ -->
+  <div class="tape" aria-hidden="true">
+    <div class="tape-track">
+      <span>Смаш бургери</span><i>★</i><span>Приготвено свежо</span><i>★</i><span>Наситени вкусове</span><i>★</i><span>Със страст</span><i>★</i><span>Ледена наливна бира</span><i>★</i><span>Домашни сосове</span><i>★</i>
+      <span>Смаш бургери</span><i>★</i><span>Приготвено свежо</span><i>★</i><span>Наситени вкусове</span><i>★</i><span>Със страст</span><i>★</i><span>Ледена наливна бира</span><i>★</i><span>Домашни сосове</span><i>★</i>
+    </div>
+  </div>
+
+  <!-- ═════════ МЕНЮ ═════════ -->
+  <section class="menu" id="menu">
+    <header class="sec-head reveal">
+      <p class="kicker">Менюто</p>
+      <h2>Осем бургера.<br><em>Нула</em> компромиси.</h2>
+      <p class="lead">Избери бургер и го виж слой по слой. После го натрупай с добавки и гледай как сметката расте.</p>
+      <button class="roll" id="rollBtn" type="button"><span class="dice" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>Не можеш да избереш? Завърти</button>
+    </header>
+
+    <div class="lab">
+      <ol class="picker reveal" id="picker" aria-label="Бургери"></ol>
+
+      <div class="stage reveal">
+        <div class="stage-top">
+          <span class="stage-no" id="stageNo">01</span>
+          <button class="chip-btn" id="explodeBtn" type="button" aria-pressed="false">Разглоби</button>
+        </div>
+        <button class="stage-arrow stage-prev" id="stagePrev" type="button" aria-label="Предишен бургер">←</button>
+        <button class="stage-arrow stage-next" id="stageNext" type="button" aria-label="Следващ бургер">→</button>
+        <div class="stage-burger" id="stageBurger" aria-live="polite"></div>
+        <div class="stage-plate" aria-hidden="true"></div>
+        <p class="stage-label"><b id="stageName"></b><span id="stagePrice"></span></p>
+        <p class="stage-quip scribble" id="quip"></p>
+      </div>
+
+      <aside class="card reveal" aria-label="Детайли за бургера">
+        <h3 class="card-name" id="cardName"></h3>
+        <p class="card-note" id="cardNote"></p>
+        <ul class="ings" id="ings"></ul>
+
+        <div class="extras">
+          <p class="extras-title">Добавки <span>— цъкни, за да натрупаш</span></p>
+          <div class="extras-grid" id="extras"></div>
+          <ul class="added" id="added"></ul>
+        </div>
+
+        <div class="total">
+          <div>
+            <span class="total-label">Цена</span>
+            <button class="link-btn" id="resetBtn" type="button" hidden>Махни добавките</button>
+          </div>
+          <strong class="price-tag"><span>€</span><b id="price">0.00</b></strong>
+        </div>
+        <p class="fine">Сайтът е информативен. Поръчай на място или звънни на <a href="tel:+359883309390">0883 309 390</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═════════ DIRTY FRIES ═════════ -->
+  <section class="fries wall" id="fries">
+    <div class="fries-art reveal">
+      <button class="taped taped-fries" type="button" data-full="assets/photo-fries.jpg" data-caption="TÁBO Dirty Fries. Вилицата е препоръчителна.">
+        <img src="assets/photo-fries.jpg" width="1088" height="1344" loading="lazy" alt="Ръка в черна ръкавица държи хартиена лодка с TÁBO Dirty Fries пред жълтия графит на стената">
+        <span>Would you try this?</span>
+      </button>
+      <span class="sticker sticker-fork">Препоръчва<br>се вилица</span>
+    </div>
+    <div class="fries-copy reveal">
+      <p class="kicker">Не е гарнитура. Основно е.</p>
+      <h2>TÁBO<br>Dirty Fries</h2>
+      <p class="lead">Подправени картофки, затрупани с всичко, което обичаш в бургера — без хлебчето.</p>
+      <ul class="fries-list">
+        <li><b>01</b>Подправени картофки</li>
+        <li><b>02</b>Накълцано смаш кюфте с чедър</li>
+        <li><b>03</b>Хрупкав бекон</li>
+        <li><b>04</b>Кисели краставички</li>
+        <li><b>05</b>Сос по избор</li>
+      </ul>
+      <div class="sauces">
+        <p class="extras-title">Сосовете са наши</p>
+        <div class="sauce-row">
+          <span style="--c:#f6a05b">Сос TÁBO</span>
+          <span style="--c:#f7c873">TÁBO Chicken</span>
+          <span style="--c:#e5562d">Домашен Buffalo</span>
+          <span style="--c:#e8c547">Домашна медена горчица</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ НА ЖИВО (снимки) ═════════ -->
+  <section class="shots" id="shots">
+    <header class="sec-head reveal">
+      <p class="kicker">На живо</p>
+      <h2>Снимано на маса,<br><em>не в студио.</em></h2>
+      <p class="lead">Така изглежда, когато стигне до теб. Цъкни снимка, за да я видиш отблизо.</p>
+    </header>
+    <div class="shots-wall wall">
+      <button class="taped t1 reveal" type="button" data-full="assets/photo-og.jpg" data-caption="Fat OG TÁBO с домашен buffalo, медена горчица, подправени картофки и наливна бира.">
+        <img src="assets/photo-og.jpg" width="1300" height="1305" loading="lazy" alt="OG TÁBO бургер с подправени картофки, два соса и чаша наливна бира, на фона на жълтите варели в обекта">
+        <span>Fat OG TÁBO + наливна</span>
+      </button>
+      <button class="taped t2 reveal" type="button" data-full="assets/photo-chicken.jpg" data-caption="Смаш кюфте, панирано пиле, TÁBOSLAW и домашна медена горчица.">
+        <img src="assets/photo-chicken.jpg" width="1300" height="1381" loading="lazy" alt="Бургер със смаш кюфте, панирано пиле и коулслоу до картофки с медена горчица, пред графита TÁBO Est. 2026">
+        <span>I'm a burger. Est. 2026</span>
+      </button>
+      <a class="note reveal" target="_blank" rel="noopener" href="https://www.instagram.com/tabo.americanstreetfood/">
+        <b>Гладен за още?</b>
+        Новите кадри излизат първо в Instagram.
+        <em>@tabo.americanstreetfood ↗</em>
+      </a>
+      <p class="scribble shots-tag" aria-hidden="true">Est.<br>2026</p>
+    </div>
+  </section>
+
+  <!-- ═════════ МЯСТОТО ═════════ -->
+  <section class="place" id="place">
+    <header class="sec-head reveal">
+      <p class="kicker">Мястото</p>
+      <h2>Жълти варели,<br>голям екран,<br><em>студена бира.</em></h2>
+    </header>
+    <div class="bento">
+      <article class="panel panel-smash reveal">
+        <div class="panel-copy">
+          <span class="fact-no">01</span>
+          <h3>Смачкано на плочата</h3>
+          <p>Топка месо, нажежена плоча и един здрав натиск. Така кюфтето хваща хрупкава коричка отвън и остава сочно отвътре. Пробвай сам.</p>
+          <p class="smash-score">Смачкани кюфтета <b id="smashCount">0</b></p>
+          <p class="scribble smash-quip" id="smashQuip" aria-live="polite"></p>
+        </div>
+        <button class="griddle" id="griddle" type="button" aria-label="Смачкай кюфтето">
+          <span class="press" aria-hidden="true"><i></i></span>
+          <span class="meat" aria-hidden="true"></span>
+          <span class="plate" aria-hidden="true"></span>
+          <span class="griddle-hint scribble" aria-hidden="true">цъкни, за да смачкаш</span>
+        </button>
+      </article>
+
+      <article class="panel panel-match reveal" id="matchPanel">
+        <span class="fact-no">02</span>
+        <h3>Гледаме заедно</h3>
+        <p>Големите мачове вървят на екрана. Формулата е проста: един бургер + една ледено студена наливна бира.</p>
+        <div class="score" aria-label="Бургер 1, Бира 1">
+          <div><small>Бургер</small><b>1</b></div><i>:</i><div><small>Бира</small><b>1</b></div>
+        </div>
+        <svg class="beer" viewBox="0 0 140 220" aria-hidden="true">
+          <defs><clipPath id="beerClip"><path d="M22,14 H118 L106,206 H34 Z"/></clipPath></defs>
+          <g clip-path="url(#beerClip)">
+            <rect width="140" height="220" fill="#1a1a1a"/>
+            <g class="beer-liquid">
+              <rect y="14" width="140" height="210" fill="#f2a51a"/>
+              <rect y="14" x="26" width="14" height="210" fill="#ffd257" opacity=".55"/>
+              <g class="bubbles" fill="#ffe9a6">
+                <circle cx="50" cy="200" r="3"/><circle cx="72" cy="210" r="2.2"/><circle cx="90" cy="195" r="2.8"/><circle cx="62" cy="215" r="1.8"/><circle cx="84" cy="220" r="2.4"/>
+              </g>
+              <path d="M0,-6 Q12,-22 26,-10 Q40,-26 56,-10 Q70,-24 86,-10 Q100,-26 116,-10 Q130,-20 140,-6 V22 H0 Z" fill="#fff8e6"/>
+            </g>
+          </g>
+          <path d="M22,14 H118 L106,206 H34 Z" fill="none" stroke="#f4ebd9" stroke-width="5" stroke-linejoin="round"/>
+          <text x="70" y="128" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="20" letter-spacing="2" fill="#0b0b0b" opacity=".7">TÁBO</text>
+        </svg>
+      </article>
+
+      <article class="panel panel-sauce reveal">
+        <span class="fact-no">03</span>
+        <h3>Домашно, не от кофа</h3>
+        <p>Buffalo сосът и медената горчица са домашни, а сос TÁBO и TÁBOSLAW са по наша рецепта. Картофките идват подправени.</p>
+      </article>
+    </div>
+    <div class="barrels reveal">
+      <div class="barrels-head">
+        <p class="scribble barrels-note" id="barrelsNote" aria-live="polite"></p>
+        <button class="chip-btn" id="barrelsAgain" type="button" hidden>Разбъркай пак</button>
+      </div>
+      <div class="barrel-row" id="barrels"></div>
+    </div>
+  </section>
+
+  <!-- ═════════ РАБОТНО ВРЕМЕ + КОНТАКТ ═════════ -->
+  <section class="hours" id="hours">
+    <div class="hours-left reveal">
+      <p class="kicker kicker-dark">Работно време</p>
+      <h2 class="hours-status" data-status-big>…</h2>
+      <p class="hours-sub" data-status-sub></p>
+      <table class="hours-table" id="hoursTable" aria-label="Работно време по дни"></table>
+    </div>
+    <div class="hours-right reveal">
+      <div class="contact">
+        <p class="contact-label">Адрес</p>
+        <p class="contact-big">ул. „Страхил войвода"&nbsp;№&nbsp;30<br>гр. Дупница</p>
+        <a class="btn btn-dark" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%D1%83%D0%BB.+%D0%A1%D1%82%D1%80%D0%B0%D1%85%D0%B8%D0%BB+%D0%B2%D0%BE%D0%B9%D0%B2%D0%BE%D0%B4%D0%B0+30%2C+%D0%94%D1%83%D0%BF%D0%BD%D0%B8%D1%86%D0%B0">Отвори в Google Maps ↗</a>
+      </div>
+      <div class="contact">
+        <p class="contact-label">Телефон</p>
+        <a class="contact-huge" href="tel:+359883309390">0883 309 390</a>
+      </div>
+      <div class="contact">
+        <p class="contact-label">Instagram</p>
+        <a class="contact-big contact-link" target="_blank" rel="noopener" href="https://www.instagram.com/tabo.americanstreetfood/">@tabo.americanstreetfood ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer wall">
+  <div class="footer-mark" aria-hidden="true">
+    <span>TÁB</span><svg><use href="#burger-o"/></svg>
+  </div>
+  <div class="footer-row">
+    <p>TÁBO American Street Food · Est. 2026</p>
+    <p>Big Taste. No Nonsense.</p>
+    <a href="#top">Нагоре ↑</a>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Снимка в голям размер">
+  <button class="lb-close" type="button" data-lb="close" aria-label="Затвори">×</button>
+  <button class="lb-nav lb-prev" type="button" data-lb="prev" aria-label="Предишна снимка">←</button>
+  <figure>
+    <img id="lbImg" alt="">
+    <figcaption class="scribble" id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-nav lb-next" type="button" data-lb="next" aria-label="Следваща снимка">→</button>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
